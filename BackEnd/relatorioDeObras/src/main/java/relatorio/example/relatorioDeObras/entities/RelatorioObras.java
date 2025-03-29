@@ -1,131 +1,168 @@
 package relatorio.example.relatorioDeObras.entities;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RelatorioObras {
-	private String data;
-	private String executante;
-	private String rotaEndereco;
-	private String descricaoServicos;
-	private String legal;
-	private String tipo;
-	private String ct;
-	private String caboNumero;
-	private String lateralNumero;
-	private String AtpOsx;
-	private Map<String, String> inspecaoServico;
-	private Map<String, String> materiaisGastos;
-	private String coordenador;
+    private String data;
+    private String executante;
+    private String legal;
+    private String rotaEndereco;
+    private String descricaoServicos;
+    private String tipo;
+    private String ct;
+    private String caboNumero;
+    private String lateralNumero;
+    private String atpOsx;
+    private String coordenador;
+    private Map<String, String> inspecaoServico = new HashMap<>();
+    private List<Material> materiaisGastos = new ArrayList<>();
 
-	public RelatorioObras() {
-		inspecaoServico = new LinkedHashMap<>();
-		materiaisGastos = new LinkedHashMap<>();
-	}
+    public static class Material {
+        private String descricao;
+        private String quantidade;
 
-	// Getters e Setters
-	public String getData() {
-		return data;
-	}
+        // Construtor
+        public Material() {}
 
-	public void setData(String data) {
-		this.data = data;
-	}
+        // Getters e Setters
+        public String getDescricao() {
+            return descricao;
+        }
 
-	public String getExecutante() {
-		return executante;
-	}
+        public void setDescricao(String descricao) {
+            this.descricao = descricao;
+        }
 
-	public void setExecutante(String executante) {
-		this.executante = executante;
-	}
+        public String getQuantidade() {
+            return quantidade;
+        }
 
-	public String getRotaEndereco() {
-		return rotaEndereco;
-	}
+        public void setQuantidade(String quantidade) {
+            this.quantidade = quantidade;
+        }
+    }
 
-	public void setRotaEndereco(String rotaEndereco) {
-		this.rotaEndereco = rotaEndereco;
-	}
+    // Construtor
+    public RelatorioObras() {}
 
-	public String getDescricaoServicos() {
-		return descricaoServicos;
-	}
+    // Getters e Setters
+    public String getData() {
+        return data;
+    }
 
-	public void setDescricaoServicos(String descricaoServicos) {
-		this.descricaoServicos = descricaoServicos;
-	}
+    public void setData(String data) {
+        this.data = data;
+    }
 
-	public String getLegal() {
-		return legal;
-	}
+    public String getExecutante() {
+        return executante;
+    }
 
-	public void setLegal(String legal) {
-		this.legal = legal;
-	}
+    public void setExecutante(String executante) {
+        this.executante = executante;
+    }
 
-	public String getTipo() {
-		return tipo;
-	}
+    public String getLegal() {
+        return legal;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+    public void setLegal(String legal) {
+        this.legal = legal;
+    }
 
-	public String getCt() {
-		return ct;
-	}
+    public String getRotaEndereco() {
+        return rotaEndereco;
+    }
 
-	public void setCt(String ct) {
-		this.ct = ct;
-	}
+    public void setRotaEndereco(String rotaEndereco) {
+        this.rotaEndereco = rotaEndereco;
+    }
 
-	public String getCaboNumero() {
-		return caboNumero;
-	}
+    public String getDescricaoServicos() {
+        return descricaoServicos;
+    }
 
-	public void setCaboNumero(String caboNumero) {
-		this.caboNumero = caboNumero;
-	}
+    public void setDescricaoServicos(String descricaoServicos) {
+        this.descricaoServicos = descricaoServicos;
+    }
 
-	public String getLateralNumero() {
-		return lateralNumero;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public void setLateralNumero(String lateralNumero) {
-		this.lateralNumero = lateralNumero;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
+    public String getCt() {
+        return ct;
+    }
 
-	public String getAtpOsx() {
-		return AtpOsx;
-	}
+    public void setCt(String ct) {
+        this.ct = ct;
+    }
 
-	public void setAtpOsx(String atpOsx) {
-		AtpOsx = atpOsx;
-	}
+    public String getCaboNumero() {
+        return caboNumero;
+    }
 
-	public Map<String, String> getInspecaoServico() {
-		return inspecaoServico;
-	}
+    public void setCaboNumero(String caboNumero) {
+        this.caboNumero = caboNumero;
+    }
 
-	public void adicionarItemInspecao(String item, String situacao) {
-		inspecaoServico.put(item, situacao);
-	}
+    public String getLateralNumero() {
+        return lateralNumero;
+    }
 
-	public Map<String, String> getMateriaisGastos() {
-		return materiaisGastos;
-	}
+    public void setLateralNumero(String lateralNumero) {
+        this.lateralNumero = lateralNumero;
+    }
 
-	public void adicionarMaterialGasto(String descricao, String quantidade) {
-		materiaisGastos.put(descricao, quantidade);
-	}
+    public String getAtpOsx() {
+        return atpOsx;
+    }
 
-	public String getCoordenador() {
-		return coordenador;
-	}
+    public void setAtpOsx(String atpOsx) {
+        this.atpOsx = atpOsx;
+    }
 
-	public void setCoordenador(String coordenador) {
-		this.coordenador = coordenador;
-	}
+    public String getCoordenador() {
+        return coordenador;
+    }
+
+    public void setCoordenador(String coordenador) {
+        this.coordenador = coordenador;
+    }
+
+    public Map<String, String> getInspecaoServico() {
+        return inspecaoServico;
+    }
+
+    public void setInspecaoServico(Map<String, String> inspecaoServico) {
+        this.inspecaoServico = inspecaoServico;
+    }
+
+    public List<Material> getMateriaisGastos() {
+        return materiaisGastos;
+    }
+
+    public void setMateriaisGastos(List<Material> materiaisGastos) {
+        this.materiaisGastos = materiaisGastos;
+    }
+
+    // Método para adicionar item de inspeção
+    public void adicionarItemInspecao(String item, String situacao) {
+        this.inspecaoServico.put(item, situacao);
+    }
+
+    // Método para adicionar material
+    public void adicionarMaterialGasto(String descricao, String quantidade) {
+        Material material = new Material();
+        material.setDescricao(descricao);
+        material.setQuantidade(quantidade);
+        this.materiaisGastos.add(material);
+    }
 }

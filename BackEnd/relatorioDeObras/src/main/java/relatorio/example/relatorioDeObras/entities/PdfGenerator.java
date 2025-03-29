@@ -1,11 +1,13 @@
 package relatorio.example.relatorioDeObras.entities;
 
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
@@ -22,12 +24,12 @@ public class PdfGenerator {
 	private static final Font NORMAL_FONT = new Font(Font.FontFamily.HELVETICA, 10);
 	private static final Font SMALL_FONT = new Font(Font.FontFamily.HELVETICA, 8, Font.ITALIC);
 
-	public static void gerarPDF(RelatorioObras relatorio, String fileName) {
-		Document document = new Document(PageSize.A4.rotate());
-
-		try {
-			PdfWriter.getInstance(document, new FileOutputStream(fileName));
-			document.open();
+	public static void gerarPDF(RelatorioObras relatorio, ByteArrayOutputStream baos) throws DocumentException, IOException {
+        Document document = new Document(PageSize.A4.rotate());
+        
+        try {
+            PdfWriter.getInstance(document, baos);
+            document.open();
 
 			// 1. CABEÇALHO
 			PdfPTable headerTable = new PdfPTable(2);
@@ -152,12 +154,14 @@ public class PdfGenerator {
 			PdfPTable materialsTable = new PdfPTable(2);
 			materialsTable.setWidthPercentage(100);
 
+			// Cabeçalhos
 			addSmallCell(materialsTable, "Descrição", HEADER_FONT);
 			addSmallCell(materialsTable, "Qtde.", HEADER_FONT);
 
-			for (Map.Entry<String, String> entry : relatorio.getMateriaisGastos().entrySet()) {
-				addSmallCell(materialsTable, entry.getKey(), NORMAL_FONT);
-				addSmallCell(materialsTable, entry.getValue(), NORMAL_FONT);
+			// Iteração correta pela lista de materiais
+			for (RelatorioObras.Material material : relatorio.getMateriaisGastos()) {
+			    addSmallCell(materialsTable, material.getDescricao(), NORMAL_FONT);
+			    addSmallCell(materialsTable, material.getQuantidade(), NORMAL_FONT);
 			}
 
 			materialsCell.addElement(materialsTable);
