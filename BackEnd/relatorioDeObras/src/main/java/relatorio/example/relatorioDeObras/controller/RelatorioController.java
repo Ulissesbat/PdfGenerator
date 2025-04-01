@@ -1,11 +1,10 @@
 package relatorio.example.relatorioDeObras.controller;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Logger;
 
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,41 +29,46 @@ public class RelatorioController {
 
     @PostMapping("/gerar")
     public ResponseEntity<byte[]> gerarRelatorio(@RequestBody RelatorioObras dados) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            // Validação dos dados
-            if (dados.getMateriaisGastos() == null || dados.getMateriaisGastos().isEmpty()) {
-                return ResponseEntity.badRequest().body("Adicione pelo menos um material".getBytes());
+            logger.info("Iniciando geração de relatório...");
+            
+            // Validação simplificada
+            if (dados.getInspecaoServico() == null || dados.getCoordenador() == null) {
+                logger.warning("Dados incompletos recebidos");
+                return ResponseEntity.badRequest().body("Dados incompletos".getBytes());
             }
 
-            if (dados.getInspecaoServico() == null || !isInspecaoValida(dados.getInspecaoServico())) {
-                return ResponseEntity.badRequest().body("Preencha todos os itens de inspeção".getBytes());
-            }
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            // Geração do PDF
             PdfGenerator.gerarPDF(dados, baos);
+            
+            logger.info("PDF gerado com sucesso. Tamanho: " + baos.size() + " bytes");
 
+            // Configuração do response com headers corretos
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("filename", "relatorio_obras.pdf");
+            headers.setContentDisposition(
+                ContentDisposition.builder("attachment")
+                    .filename("relatorio_obras.pdf")
+                    .build());
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
             
             return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
-
-        } catch (DocumentException | IOException e) {
-            logger.severe("Erro ao gerar PDF: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(e.getMessage().getBytes());
-        }
-    }
-
-    private boolean isInspecaoValida(Map<String, String> inspecao) {
-        String[] itens = {"caboAereo", "caboSubterraneo", "pressurizacao", 
-                         "instalacaoPadrao", "linhaTerra", "pavimento", 
-                         "medicao", "limpeza"};
-        
-        for (String item : itens) {
-            if (inspecao.get(item) == null || inspecao.get(item).isEmpty()) {
-                return false;
+            
+        } catch (DocumentException e) {
+            logger.severe("Erro no documento: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(("Erro ao gerar PDF: " + e.getMessage()).getBytes());
+        } catch (IOException e) {
+            logger.severe("Erro de IO: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(("Erro de sistema: " + e.getMessage()).getBytes());
+        } finally {
+            try {
+                baos.close();
+            } catch (IOException e) {
+                logger.warning("Erro ao fechar stream: " + e.getMessage());
             }
         }
-        return true;
     }
 }
