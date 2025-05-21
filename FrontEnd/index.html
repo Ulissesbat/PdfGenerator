@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Obras</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="loading" id="loading">
+        Gerando relatório, por favor aguarde...
+    </div>
+
+    <div class="form-container">
+        <div class="progress-bar">
+            <div class="progress-line">
+                <div class="progress-line-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-step active" data-step="1">1</div>
+            <div class="progress-step" data-step="2">2</div>
+            <div class="progress-step" data-step="3">3</div>
+            <div class="progress-step" data-step="4">4</div>
+            <div class="progress-step" data-step="5">5</div>
+            <div class="progress-step" data-step="6">6</div>
+        </div>
+        
+        <!-- Passo 1 -->
+        <div class="form-step active" id="step1">
+            <h2>Dados Iniciais</h2>
+            
+            <div class="form-group">
+                <label for="data">Data:</label>
+                <input type="date" id="data" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="executante">Executante:</label>
+                <input type="text" id="executante" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="legal">Legal:</label>
+                <input type="text" id="legal" required>
+            </div>
+            
+            <div class="button-group">
+                <div></div>
+                <button class="btn-next" onclick="nextStep(2)">Próximo</button>
+            </div>
+        </div>
+        
+        <!-- Passo 2 -->
+        <div class="form-step" id="step2">
+            <h2>Local e Descrição</h2>
+            
+            <div class="form-group">
+                <label for="rota">Rota/Endereço:</label>
+                <input type="text" id="rota" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="descricao">Descrição dos Serviços Executados:</label>
+                <textarea id="descricao" rows="4" required></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-prev" onclick="prevStep(1)">Voltar</button>
+                <button class="btn-next" onclick="nextStep(3)">Próximo</button>
+            </div>
+        </div>
+        
+        <!-- Passo 3 -->
+        <div class="form-step" id="step3">
+            <h2>Dados Técnicos</h2>
+            
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="ct">CT:</label>
+                <input type="text" id="ct" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="caboNumero">Número do Cabo:</label>
+                <input type="text" id="caboNumero" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="lateralNumero">Lateral:</label>
+                <input type="text" id="lateralNumero" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="atpOsx">ATP/OSX:</label>
+                <input type="text" id="atpOsx" required>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-prev" onclick="prevStep(2)">Voltar</button>
+                <button class="btn-next" onclick="nextStep(4)">Próximo</button>
+            </div>
+        </div>
+        
+        <!-- Passo 4 -->
+        <div class="form-step" id="step4">
+            <h2>Inspeção do Serviço</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Check-List</th>
+                        <th>C</th>
+                        <th>NC</th>
+                        <th>NA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cabo aéreo espinado</td>
+                        <td><input type="radio" name="caboAereo" value="C" required></td>
+                        <td><input type="radio" name="caboAereo" value="NC"></td>
+                        <td><input type="radio" name="caboAereo" value="NA"></td>
+                    </tr>
+                    <tr>
+                        <td>Cabo subterrâneo lançado e tamponado</td>
+                        <td><input type="radio" name="caboSubterraneo" value="C" required></td>
+                        <td><input type="radio" name="caboSubterraneo" value="NC"></td>
+                        <td><input type="radio" name="caboSubterraneo" value="NA"></td>
+                    </tr>
+                    <tr>
+                        <td>Verificado a pressurização do cabo</td>
+                        <td><input type="radio" name="pressurizacao" value="C" required></td>
+                        <td><input type="radio" name="pressurizacao" value="NC"></td>
+                        <td><input type="radio" name="pressurizacao" value="NA"></td>
+                    </tr>
+                    <tr>
+                        <td>Instalação/transferência de linha feitas no padrão</td>
+                        <td><input type="radio" name="instalacao_padrao" value="C" required></td>
+                        <td><input type="radio" name="instalacao_padrao" value="NC"></td>
+                        <td><input type="radio" name="instalacao_padrao" value="NA"></td>
+                    </tr>
+                    <tr>
+                        <td>Linha terra executada vinculação</td>
+                        <td><input type="radio" name="linhaTerra" value="C" required></td>
+                        <td><input type="radio" name="linhaTerra" value="NC"></td>
+                        <td><input type="radio" name="linhaTerra" value="NA"></td>
+                    </tr>
+                    <tr>
+                        <td>Pavimento refeito</td>
+                        <td><input type="radio" name="pavimento" value="C" required></td>
+                        <td><input type="radio" name="pavimento" value="NC"></td>
+                        <td><input type="radio" name="pavimento" value="NA"></td>
+                    </tr>
+                    <tr>
+                        <td>Medição do comprimento do cabo conferida</td>
+                        <td><input type="radio" name="medicao" value="C" required></td>
+                        <td><input type="radio" name="medicao" value="NC"></td>
+                        <td><input type="radio" name="medicao" value="NA"></td>
+                    </tr>
+                    <tr>
+                        <td>Limpeza e retirada de sobras no local</td>
+                        <td><input type="radio" name="limpeza" value="C" required></td>
+                        <td><input type="radio" name="limpeza" value="NC"></td>
+                        <td><input type="radio" name="limpeza" value="NA"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="button-group">
+                <button class="btn-prev" onclick="prevStep(3)">Voltar</button>
+                <button class="btn-next" onclick="nextStep(5)">Próximo</button>
+            </div>
+        </div>
+        
+        <!-- Passo 5 -->
+        <div class="form-step" id="step5">
+            <h2>Material Gasto</h2>
+            
+            <div id="materiaisContainer">
+                <div class="material-row">
+                    <input type="text" placeholder="Descrição do material" class="material-desc">
+                    <input type="number" placeholder="Quantidade" class="material-qtd">
+                    <button type="button" onclick="this.parentNode.remove()" class="remove-material">×</button>
+                </div>
+            </div>
+            
+            <button class="add-material" onclick="addMaterial()">+ Adicionar Material</button>
+            
+            <div class="button-group">
+                <button class="btn-prev" onclick="prevStep(4)">Voltar</button>
+                <button class="btn-next" onclick="nextStep(6)">Próximo</button>
+            </div>
+        </div>
+        
+        <!-- Passo 6 -->
+        <div class="form-step" id="step6">
+            <h2>Finalização</h2>
+            
+            <div class="form-group">
+                <label for="coordenador">Coordenador Op. Telecom:</label>
+                <input type="text" id="coordenador" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nomeArquivo">Nome do Arquivo PDF:</label>
+                <input type="text" id="nomeArquivo" placeholder="Digite o nome do arquivo" required>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-prev" onclick="prevStep(5)">Voltar</button>
+                <button class="btn-next" onclick="submitForm()">Gerar Relatório</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
