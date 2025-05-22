@@ -22,7 +22,10 @@ import relatorio.example.relatorioDeObras.entities.RelatorioObras;
 
 @RestController
 @RequestMapping("/api/relatorios")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {
+        "https://pdf-generator-ten-brown.vercel.app",
+        "http://localhost:5500" // para testes locais, se necessário
+})
 public class RelatorioController {
 
     private static final Logger logger = Logger.getLogger(RelatorioController.class.getName());
