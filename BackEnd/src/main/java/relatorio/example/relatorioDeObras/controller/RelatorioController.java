@@ -24,7 +24,7 @@ import relatorio.example.relatorioDeObras.entities.RelatorioObras;
 @RequestMapping("/api/relatorios")
 @CrossOrigin(origins = {
         "https://pdf-generator-ten-brown.vercel.app",
-        "http://localhost:5500" // para testes locais, se necessário
+        "http://localhost:5500"
 })
 public class RelatorioController {
 

@@ -154,7 +154,7 @@ async function submitForm() {
         };
         
         // Enviar para o backend
-        const response = await fetch('https://pdfgenerator-vy8p.onrender.com', {
+        const response = await fetch('https://pdfgenerator-vy8p.onrender.com/api/relatorios/gerar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
